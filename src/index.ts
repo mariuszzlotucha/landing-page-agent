@@ -1,6 +1,6 @@
 import { input } from "@inquirer/prompts";
 import { ChatOpenAI } from "@langchain/openai";
-import { createAgent } from "langchain";
+import { BaseMessage, createAgent, HumanMessage } from "langchain";
 import {tool} from '@langchain/core/tools'
 import {writeFile, readFile} from 'node:fs/promises'
 import {resolve} from 'node:path';
@@ -41,14 +41,20 @@ const landingPageAgent = createAgent({
     systemPrompt: 'You are web designer and developer who creates clear, conversion-focued landing pages. Generate a complete, self-contained HTML docuemnt based ont the users request. You must call save_index_html with finished HTML so it is written to disc as index.html. Do not wrap the HTML in Markdown fences'
 })
 
-const prompt = await input({
-    message: 'Your prompt: '
-})
+let messages: BaseMessage[] = []
 
-const result = await landingPageAgent.invoke({
-    messages: [{
-        role: 'user', content: prompt
-    }]
-})
+while (true) {
+    const prompt = await input({
+        message: 'Your prompt: '
+    })
+    messages.push(new HumanMessage(prompt))
+    const result = await landingPageAgent.invoke({
+        messages
+    })
+    
+    messages = result.messages
 
-console.log(result.messages.at(-1)?.content);
+    console.log(result.messages.at(-1)?.content);
+
+}
+
