@@ -4,13 +4,14 @@ import model from './model.js';
 import { tools } from './tools.js';
 import { buildSystemPrompt } from './systemPrompt.js';
 import { readIfExists, isQuitCommand } from './utils.js';
+import { gammaTools } from './mcp.js';
 
 const existingIndexHtml = await readIfExists('index.html')
 const existingStylesCss = await readIfExists('styles.css')
 
 const landingPageAgent = createAgent({
     model,
-    tools,
+    tools: [...tools, ...gammaTools],
     systemPrompt: buildSystemPrompt(existingIndexHtml, existingStylesCss)
 })
 

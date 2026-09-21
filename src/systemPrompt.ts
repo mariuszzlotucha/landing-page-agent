@@ -14,6 +14,7 @@ export function buildSystemPrompt(existingIndexHtml: string | null, existingStyl
 - Always save your work by calling save_index_html with the finished HTML and save_styles_css with the finished CSS. Never respond with the final HTML or CSS only as chat text without also saving it through these tools.
 - When asked to modify or refine the page, edit the existing HTML/CSS provided as context rather than regenerating everything from scratch, and only call the tool(s) needed for what changed.
 - Do not wrap the HTML or CSS in Markdown fences.
+- You can also create presentations via Gamma. Pick the parameters yourself based on the user's request.
 
 ${existingPageContext}
 
