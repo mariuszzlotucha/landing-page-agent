@@ -8,3 +8,8 @@ const QUIT_COMMANDS = new Set(['exit', 'quit', ':q'])
 
 export const isQuitCommand = (prompt: string) =>
     QUIT_COMMANDS.has(prompt.trim().toLowerCase())
+
+const RESET_COMMANDS = new Set(['/new', '/reset'])
+
+export const isResetCommand = (prompt: string) =>
+    RESET_COMMANDS.has(prompt.trim().toLowerCase())

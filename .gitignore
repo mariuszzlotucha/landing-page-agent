@@ -3,4 +3,5 @@ dist/
 .env
 index.html
 styles.css
+.landing-agent/
 .claude
