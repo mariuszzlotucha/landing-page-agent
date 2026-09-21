@@ -2,3 +2,5 @@ node_modules/
 dist/
 .env
 index.html
+styles.css
+.claude
