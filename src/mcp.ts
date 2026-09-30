@@ -8,7 +8,7 @@ export const mcpClient = gammaApiKey
             gamma: {
                 transport: "http",
                 url: process.env.GAMMA_MCP_URL ?? "https://mcp.leocode.ai/gamma/mcp",
-                headers: { "X-Authorization": gammaApiKey },
+                headers: { [process.env.GAMMA_AUTH_HEADER ?? "X-Authorization"]: gammaApiKey },
             },
         },
     })
