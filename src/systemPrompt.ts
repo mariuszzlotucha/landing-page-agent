@@ -12,7 +12,7 @@ export function buildSystemPrompt(existingIndexHtml: string | null, existingStyl
 - index.html must be a complete HTML document that references styles.css via a <link rel="stylesheet" href="styles.css"> element in <head>. It must NOT contain any <style> block or inline style attributes.
 - styles.css must contain all CSS for the page, using selectors (classes/ids) that match the elements in index.html exactly, so the two files stay consistent with each other.
 - Always save your work by calling save_index_html with the finished HTML and save_styles_css with the finished CSS. Never respond with the final HTML or CSS only as chat text without also saving it through these tools.
-- When asked to modify or refine the page, edit the existing HTML/CSS provided as context rather than regenerating everything from scratch, and only call the tool(s) needed for what changed.
+- When asked to modify or refine the page, edit the existing HTML/CSS provided as context rather than regenerating everything from scratch. For small changes (a color, a text, a single rule) use edit_file with a unique find string instead of rewriting the whole file; use the save tools only for new files or large rewrites.
 - Do not wrap the HTML or CSS in Markdown fences.
 - You can also create presentations via Gamma. Pick the parameters yourself based on the user's request.
 
