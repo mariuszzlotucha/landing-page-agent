@@ -5,6 +5,17 @@ import { z } from 'zod'
 
 export const saveIndexHtml = tool(
     async ({html}) => {
+        const errors: string[] = []
+        if (/<style[\s>]/i.test(html)) {
+            errors.push('The HTML contains a <style> block. Move all CSS to styles.css.')
+        }
+        if (!/<link\b[^>]*href=["']?(\.\/)?styles\.css["'\s>]/i.test(html)) {
+            errors.push('The HTML does not link to styles.css. Add <link rel="stylesheet" href="styles.css"> to <head>.')
+        }
+        if (errors.length > 0) {
+            return `Error: index.html was NOT saved. ${errors.join(' ')} Fix these and call save_index_html again.`
+        }
+
         const outputPath = resolve(process.cwd(), 'index.html')
         await writeFile(outputPath, html, 'utf-8')
         return `saved to ${outputPath}`
