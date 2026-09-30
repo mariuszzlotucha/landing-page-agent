@@ -12,7 +12,7 @@ const validateHtml = (html: string): string | null => {
         errors.push('The HTML does not link to styles.css. Add <link rel="stylesheet" href="styles.css"> to <head>.')
     }
     return errors.length > 0
-        ? `Error: index.html was NOT saved. ${errors.join(' ')} Fix these and call save_index_html again.`
+        ? `Error: index.html was NOT changed. ${errors.join(' ')} Fix these and try again.`
         : null
 }
 
@@ -68,7 +68,7 @@ export const editFile = tool(
         const updated = replaceAll ? content.split(find).join(replace) : content.replace(find, () => replace)
         if (file === 'index.html') {
             const error = validateHtml(updated)
-            if (error) return error.replace('save_index_html', 'edit_file')
+            if (error) return error
         }
 
         await writeFile(path, updated, 'utf-8')

@@ -52,4 +52,4 @@ while (true) {
 
 }
 
-await mcpClient.close()
+await mcpClient?.close()
