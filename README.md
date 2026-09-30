@@ -46,7 +46,8 @@ Set in `.env` (see `.env.example`):
 | Variable                 | Required | Default                          |
 | ------------------------ | -------- | --------------------------------- |
 | `OPENROUTER_API_KEY`     | yes      | —                                  |
-| `GAMMA_API_KEY`          | yes      | —                                  |
+| `GAMMA_API_KEY`          | no       | —                                  |
+| `GAMMA_MCP_URL`          | no       | `https://mcp.leocode.ai/gamma/mcp` |
 | `OPENROUTER_MODEL`       | no       | `openai/gpt-5.6-luna`              |
 | `OPENROUTER_TEMPERATURE` | no       | `0.7`                              |
 | `OPENROUTER_BASE_URL`    | no       | `https://openrouter.ai/api/v1`     |
