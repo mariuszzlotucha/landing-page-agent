@@ -1,6 +1,6 @@
 import { MultiServerMCPClient } from "@langchain/mcp-adapters";
 
-const mcpClient = new MultiServerMCPClient({
+export const mcpClient = new MultiServerMCPClient({
     mcpServers: {
         gamma: {
             transport: "http",
@@ -10,4 +10,9 @@ const mcpClient = new MultiServerMCPClient({
     },
 });
 
-export const gammaTools = await mcpClient.getTools();
+export const gammaTools = process.env.GAMMA_API_KEY
+    ? await mcpClient.getTools().catch((error) => {
+        console.warn(`Gamma unavailable, starting without it: ${error instanceof Error ? error.message : error}`)
+        return []
+    })
+    : []

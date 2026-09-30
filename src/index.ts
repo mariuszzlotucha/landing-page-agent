@@ -4,16 +4,16 @@ import model from './model.js';
 import { tools } from './tools.js';
 import { buildSystemPrompt } from './systemPrompt.js';
 import { readIfExists, isQuitCommand, isResetCommand } from './utils.js';
-import { gammaTools } from './mcp.js';
+import { gammaTools, mcpClient } from './mcp.js';
 import { loadHistory, saveHistory, clearHistory } from './history.js';
 
-const existingIndexHtml = await readIfExists('index.html')
-const existingStylesCss = await readIfExists('styles.css')
-
-const landingPageAgent = createAgent({
+const createLandingPageAgent = async () => createAgent({
     model,
     tools: [...tools, ...gammaTools],
-    systemPrompt: buildSystemPrompt(existingIndexHtml, existingStylesCss)
+    systemPrompt: buildSystemPrompt(
+        await readIfExists('index.html'),
+        await readIfExists('styles.css')
+    )
 })
 
 let messages = await loadHistory()
@@ -40,6 +40,7 @@ while (true) {
     }
 
     messages.push(new HumanMessage(prompt))
+    const landingPageAgent = await createLandingPageAgent()
     const result = await landingPageAgent.invoke({
         messages
     })
@@ -50,3 +51,5 @@ while (true) {
     console.log(result.messages.at(-1)?.content);
 
 }
+
+await mcpClient.close()
